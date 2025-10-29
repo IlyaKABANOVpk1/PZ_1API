@@ -1,0 +1,6 @@
+@PZ_1API_HostAddress = http://localhost:5189
+
+GET {{PZ_1API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
