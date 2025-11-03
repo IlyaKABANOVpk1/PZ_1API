@@ -19,34 +19,7 @@ namespace PZ_1API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<CookbookDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection")));
-
-            builder.Services.Configure<JwtConfiguration>(
-                builder.Configuration.GetSection("Jwt"));
-
-            var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtConfiguration>();
-            var secretKey = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
-            builder.Services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(opt =>
-            {
-                opt.RequireHttpsMetadata = false;
-                opt.SaveToken = true;
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtSettings.Issuer,
-                    ValidateAudience = true,
-                    ValidAudience = jwtSettings.Audience,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
+            options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 
             var app = builder.Build();
 
