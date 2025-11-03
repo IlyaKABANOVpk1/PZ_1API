@@ -9,8 +9,10 @@ namespace PZ_1API.Models
         public string Description { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        
-        public int IngridientId { get; set; }   
+
+        public int IngridientId { get; set; }
         public Ingredient Ingredient { get; set; }
+
+
     }
 }
