@@ -19,7 +19,7 @@ namespace PZ_1API
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddAutoMapper(typeof(CookbookProfile));
+           
             builder.Services.AddDbContext<CookbookDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 
