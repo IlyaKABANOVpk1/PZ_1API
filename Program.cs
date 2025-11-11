@@ -1,9 +1,11 @@
 
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using PZ_1API.Middleware;
 using PZ_1API.Models;
+using System.Text;
 
 
 namespace PZ_1API
@@ -17,7 +19,7 @@ namespace PZ_1API
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddAutoMapper(typeof(CookbookProfile));
             builder.Services.AddDbContext<CookbookDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 
@@ -28,11 +30,12 @@ namespace PZ_1API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseGlobalExceptionHandler();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
+            
 
             app.Run();
         }
