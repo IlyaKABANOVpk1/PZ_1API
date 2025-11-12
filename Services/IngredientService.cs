@@ -8,7 +8,7 @@ namespace PZ_1API.Services
     /// <summary>
     /// Сервис для работы с ингредиентами.
     /// </summary>
-    public class IngredientService
+    public class IngredientService : IIngredientService
     {
         private readonly IIngridientRepository _repository;
         private readonly IMapper _mapper;

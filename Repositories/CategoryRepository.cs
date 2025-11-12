@@ -43,8 +43,8 @@ namespace PZ_1API.Repositories
         public IEnumerable<Category> GetAll()
         {
             return _context.Categories
-                .Include(i => i.Id)
-                .ToList();
+                .Include(c => c.Recipes)
+                   .ToList();
         }
 
         public Category GetById(int id)

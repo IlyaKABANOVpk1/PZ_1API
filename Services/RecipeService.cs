@@ -8,7 +8,7 @@ namespace PZ_1API.Services
     /// <summary>
     /// Сервис для работы с рецептами.
     /// </summary>
-    public class RecipeService
+    public class RecipeService : IRecipeService
     {
         private readonly IRecipeRepository _repository;
         private readonly IMapper _mapper;

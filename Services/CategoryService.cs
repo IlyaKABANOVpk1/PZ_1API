@@ -8,7 +8,7 @@ namespace PZ_1API.Services
     /// <summary>
     /// Сервис для работы с категориями рецептов.
     /// </summary>
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _repository;
         private readonly IMapper _mapper;
@@ -19,27 +19,18 @@ namespace PZ_1API.Services
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Получить список всех категорий.
-        /// </summary>
         public IEnumerable<CategoryDto> GetAll()
         {
             var categories = _repository.GetAll();
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
-        /// <summary>
-        /// Получить категорию по Id.
-        /// </summary>
         public CategoryDto? GetById(int id)
         {
             var category = _repository.GetById(id);
             return category == null ? null : _mapper.Map<CategoryDto>(category);
         }
 
-        /// <summary>
-        /// Создать новую категорию.
-        /// </summary>
         public CategoryDto Create(CategoryDto dto)
         {
             var category = _mapper.Map<Category>(dto);
@@ -47,9 +38,6 @@ namespace PZ_1API.Services
             return _mapper.Map<CategoryDto>(created);
         }
 
-        /// <summary>
-        /// Обновить категорию.
-        /// </summary>
         public CategoryDto Update(CategoryDto dto)
         {
             var category = _mapper.Map<Category>(dto);
@@ -57,12 +45,10 @@ namespace PZ_1API.Services
             return _mapper.Map<CategoryDto>(updated);
         }
 
-        /// <summary>
-        /// Удалить категорию по Id.
-        /// </summary>
         public bool Delete(int id)
         {
             return _repository.Delete(id);
         }
     }
 }
+
