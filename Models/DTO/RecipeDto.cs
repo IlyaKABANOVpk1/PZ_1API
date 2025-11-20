@@ -5,11 +5,13 @@ namespace PZ_1API.Models.DTO
     public class RecipeDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+        public string Name { get; set; }
+        public string Description { get; set; }
+
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; } = string.Empty;
-        public int IngredientId { get; set; }
-        public string IngredientName { get; set; } = string.Empty;
+        public string CategoryName { get; set; }
+
+       
+        public List<IngredientDto> Ingredients { get; set; }
     }
 }

@@ -6,8 +6,8 @@ namespace PZ_1API.Services
     {
         IEnumerable<RecipeDto> GetAll();
         RecipeDto? GetById(int id);
-        RecipeDto Create(RecipeDto dto);
-        RecipeDto Update(RecipeDto dto);
+        RecipeDto Create(RecipeCreateDto dto);
+        RecipeDto Update(int id, RecipeUpdateDto dto);
         bool Delete(int id);
     }
 }

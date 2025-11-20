@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PZ_1API.Models.DTO;
 using PZ_1API.Services;
 
@@ -21,7 +22,7 @@ namespace PZ_1API.Controllers
             var categories = _service.GetAll();
             return Ok(categories);
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<CategoryDto> GetById(int id)
         {
@@ -30,12 +31,15 @@ namespace PZ_1API.Controllers
             return Ok(category);
         }
 
+        [Authorize(Roles = "Админ")]
         [HttpPost]
         public ActionResult<CategoryDto> Create([FromBody] CategoryDto dto)
         {
             var created = _service.Create(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
+
+        [Authorize(Roles = "Админ")]
 
         [HttpPut("{id}")]
         public ActionResult<CategoryDto> Update(int id, [FromBody] CategoryDto dto)
@@ -45,6 +49,8 @@ namespace PZ_1API.Controllers
             return Ok(updated);
         }
 
+        [Authorize(Roles = "Админ")]
+       
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

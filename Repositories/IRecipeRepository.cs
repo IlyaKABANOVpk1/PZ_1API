@@ -7,5 +7,8 @@ namespace PZ_1API.Repositories
     {
 
         bool RecipeExists(string name);
+
+        Recipe? GetByName(string name);
+        Recipe? GetByIdWithIngredients(int id);
     }
 }

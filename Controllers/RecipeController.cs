@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PZ_1API.Models.DTO;
 using PZ_1API.Services;
@@ -10,15 +11,14 @@ namespace PZ_1API.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _service;
-        private readonly IMapper _mapper;
 
-        public RecipeController(IRecipeService service, IMapper mapper)
+        public RecipeController(IRecipeService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<IEnumerable<RecipeDto>> GetAll()
         {
             var recipes = _service.GetAll();
@@ -26,6 +26,7 @@ namespace PZ_1API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<RecipeDto> GetById(int id)
         {
             var recipe = _service.GetById(id);
@@ -34,20 +35,35 @@ namespace PZ_1API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<RecipeDto> Create([FromBody] RecipeDto dto)
+        public ActionResult<RecipeDto> Create([FromBody] RecipeCreateDto dto)
         {
-            var created = _service.Create(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            try
+            {
+                var created = _service.Create(dto);
+                return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
+        [Authorize(Roles = "Админ")]
         [HttpPut("{id}")]
-        public ActionResult<RecipeDto> Update(int id, [FromBody] RecipeDto dto)
+        public ActionResult<RecipeDto> Update(int id, [FromBody] RecipeUpdateDto dto)
         {
-            if (id != dto.Id) return BadRequest("Id mismatch");
-            var updated = _service.Update(dto);
-            return Ok(updated);
+            try
+            {
+                var updated = _service.Update(id, dto);
+                return Ok(updated);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
+        [Authorize(Roles = "Админ")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

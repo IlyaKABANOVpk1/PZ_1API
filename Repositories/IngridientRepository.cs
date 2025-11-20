@@ -59,5 +59,13 @@ namespace PZ_1API.Repositories
             _context.SaveChanges();
             return entity;
         }
+
+        public List<Ingredient> GetByIds(List<int> ids)
+        {
+            // SELECT * FROM Ingredients WHERE Id IN (1, 2, 3...)
+            return _context.Ingredients
+                .Where(i => ids.Contains(i.Id))
+                .ToList();
+        }
     }
 }

@@ -60,5 +60,18 @@ namespace PZ_1API.Repositories
             _context.SaveChanges();
             return entity;
         }
+
+        public Recipe? GetByName(string name)
+        {
+            return _context.Recipes.FirstOrDefault(r => r.Name == name);
+        }
+
+        public Recipe? GetByIdWithIngredients(int id)
+        {
+            // Важно: Include подгружает связанные данные
+            return _context.Recipes
+                .Include(r => r.Ingredients)
+                .FirstOrDefault(r => r.Id == id);
+        }
     }
 }

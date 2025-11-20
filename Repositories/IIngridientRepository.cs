@@ -6,5 +6,6 @@ namespace PZ_1API.Repositories
     {
         bool IngridientExists(string name);
 
+        List<Ingredient> GetByIds(List<int> ids);
     }
 }
